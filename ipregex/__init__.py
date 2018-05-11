@@ -1,6 +1,34 @@
 import re
 
-class IPv4Regex:
+class IPRegexBase:
+    """Compiled regex. Lazily initialized by :meth:`re`."""
+    _re = None
+
+    """Initiate class. Currently empty."""
+    def __init__(self):
+        pass
+
+    def compile(self):
+        raise NotImplementedError('This method should have been overriden.')
+
+    """Return compiled regular expression. Compile regular expression if this
+    is the first call. :meth:`self._initialized_re` replace this function after
+    first call to implement lazy initialization.
+    """
+    @property
+    def re(self):
+        self.compile()
+        self.re = self._initialized_re
+        return self._re
+
+    """Return compiled regular expression. Replace :meth:`re` after regex
+    compilation.
+    """
+    @property
+    def _initialized_re(self):
+        return self._re
+
+class IPv4Regex(IPRegexBase):
     """Regular expression string for each byte of IPv4 address represented by
     an unsigned 8-bit integer.
     """
@@ -17,34 +45,29 @@ class IPv4Regex:
     """IPv4 regular expression string.
 
     `{o}` occurences in this string will be replaced with :attr:`octet_str`
-    before regular expression is compiled. Since :meth:`str.format` will be
-    used for formatting, curly braces should be escaped ({{ }}) if they are
-    meant to be used for regular expression. This is not needed for default
-    value as it does not include any curly braces in final regular expression.
+    before regular expression is compiled.
+
+    .. note:: Double curly braces should be used instead of single if curly
+              brace is meant for regular expression. This is because curly
+              braces are used by `str.format`, which is used to replace octets
+              in this string before creating regular expression.
     """
     re_str = r'(?:{o}\.{o}\.{o}\.{o})'
 
-    """Compiled regex. Lazily initialized by :meth:`re`."""
-    _re = None
 
-    """Receives no parameters and does nothing."""
+    """Initate class. Call constructor of base class."""
     def __init__(self):
+        super().__init__()
         pass
 
+    """Replace octets in regular expression string and compile regular
+    expression.
+    """
     def compile(self):
         self._re = re.compile(self.re_str.format(o=self.octet_str))
 
-    @property
-    def re(self):
-        self.compile()
-        self.re  = self._initialized_re
-        return self._re
 
-    @property
-    def _initialized_re(self):
-        return self._re
-
-class IPv6Regex:
+class IPv6Regex(IPRegexBase):
     """Regular expression string for each 2 bytes of IPv6 address represented
     by 1-4 hexadecimal characters.
 
@@ -60,9 +83,13 @@ class IPv6Regex:
 
     """IPv6 regular expression string.
 
-    .. note:: Double curly braces used here are to denote they are not format
-              identifiers, as they are part of regular expression. i.e. They
-              are escaped.
+    `{x}` occurences in this string will be replaced with :attr:`hextet_str`
+    before regular expression is compiled.
+
+    .. note:: Double curly braces should be used instead of single if curly
+              brace is meant for regular expression. This is because curly
+              braces are used by `str.format`, which is used to replace hextets
+              in this string before creating regular expression.
     """
     re_str = (
         r'(?:'                           # begin non-capturing group
@@ -76,25 +103,16 @@ class IPv6Regex:
         r'|:(?::{x}){{1,7}}'             # or 1-7 hextets after ::
         r'|::'                           # or no hextets at all
         r')'                             # end non-capturing group
-    ).format(x=hextet_str)
+    )
 
-    """Compiled regex. Lazily initialized by :meth:`re`."""
-    _re = None
-
-    """Constructor receives no parameters and does nothing."""
+    """Initate class. Call constructor of base class."""
     def __init__(self):
+        super().__init__()
         pass
 
+    """Replace hextets in regular expression string and compile regular
+    expression.
+    """
     def compile(self):
         self._re = re.compile(self.re_str.format(x=self.hextet_str))
-
-    @property
-    def re(self):
-        self.compile()
-        self.re  = self._initialized_re
-        return self._re
-
-    @property
-    def _initialized_re(self):
-        return self._re
 
