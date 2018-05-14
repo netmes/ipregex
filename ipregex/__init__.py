@@ -57,7 +57,7 @@ class IPv4Regex(IPRegexBase):
 
     """Initate class. Call constructor of base class."""
     def __init__(self):
-        super().__init__()
+        super(IPv4Regex, self).__init__()
         pass
 
     """Replace octets in regular expression string and compile regular
@@ -109,7 +109,7 @@ class IPv6Regex(IPRegexBase):
 
     """Initate class. Call constructor of base class."""
     def __init__(self):
-        super().__init__()
+        super(IPv6Regex, self).__init__()
         pass
 
     """Replace hextets in regular expression string and compile regular
