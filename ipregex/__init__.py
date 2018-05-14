@@ -1,8 +1,8 @@
 import re
 
 class IPRegexBase:
-    """Compiled regex. Lazily initialized by :meth:`re`."""
-    _re = None
+    """Compiled regex. Lazily initialized by :meth:`regex`."""
+    _regex = None
 
     """Initiate class. Currently empty."""
     def __init__(self):
@@ -12,21 +12,21 @@ class IPRegexBase:
         raise NotImplementedError('This method should have been overriden.')
 
     """Return compiled regular expression. Compile regular expression if this
-    is the first call. :meth:`self._initialized_re` replace this function after
-    first call to implement lazy initialization.
+    is the first call. :meth:`self._initialized_regex` replace this function
+    after first call to implement lazy initialization.
     """
     @property
-    def re(self):
+    def regex(self):
         self.compile()
-        self.re = self._initialized_re
-        return self._re
+        self.re = self._initialized_regex
+        return self._regex
 
-    """Return compiled regular expression. Replace :meth:`re` after regex
+    """Return compiled regular expression. Replace :meth:`regex` after regex
     compilation.
     """
     @property
-    def _initialized_re(self):
-        return self._re
+    def _initialized_regex(self):
+        return self._regex
 
 class IPv4Regex(IPRegexBase):
     """Regular expression string for each byte of IPv4 address represented by
@@ -52,7 +52,7 @@ class IPv4Regex(IPRegexBase):
               braces are used by `str.format`, which is used to replace octets
               in this string before creating regular expression.
     """
-    re_str = r'(?:{o}\.{o}\.{o}\.{o})'
+    re_str = r'^(?:{o}\.{o}\.{o}\.{o})$'
 
 
     """Initate class. Call constructor of base class."""
@@ -64,7 +64,7 @@ class IPv4Regex(IPRegexBase):
     expression.
     """
     def compile(self):
-        self._re = re.compile(self.re_str.format(o=self.octet_str))
+        self._regex = re.compile(self.re_str.format(o=self.octet_str))
 
 
 class IPv6Regex(IPRegexBase):
@@ -92,6 +92,7 @@ class IPv6Regex(IPRegexBase):
               in this string before creating regular expression.
     """
     re_str = (
+        r'^'
         r'(?:'                           # begin non-capturing group
         r'(?:{x}:){{7}}{x}'              # 8 hextets
         r'|(?:{x}:){{6}}(?::{x}){{0,1}}' # or 6 hextets, 0-1 hextets after ::
@@ -103,6 +104,7 @@ class IPv6Regex(IPRegexBase):
         r'|:(?::{x}){{1,7}}'             # or 1-7 hextets after ::
         r'|::'                           # or no hextets at all
         r')'                             # end non-capturing group
+        r'$'
     )
 
     """Initate class. Call constructor of base class."""
@@ -114,5 +116,5 @@ class IPv6Regex(IPRegexBase):
     expression.
     """
     def compile(self):
-        self._re = re.compile(self.re_str.format(x=self.hextet_str))
+        self._regex = re.compile(self.re_str.format(x=self.hextet_str))
 
