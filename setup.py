@@ -10,11 +10,5 @@ setup(
     license='LICENSE',
     description=('Provides regular expression for IPv4/IPv6 addresses.'),
     long_description=open('README.rst').read(),
-    setup_requires=[
-        'pytest_runner',
-    ],
-    tests_require=[
-        'pytest',
-    ]
 )
 
