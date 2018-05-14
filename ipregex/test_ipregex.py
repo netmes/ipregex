@@ -5,7 +5,6 @@ from . import (
 import pytest
 
 @pytest.mark.slow
-@pytest.mark.skip
 def test_ipv4_correct_addresses():
     regex = IPv4Regex().regex
 
