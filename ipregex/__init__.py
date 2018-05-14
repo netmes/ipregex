@@ -1,6 +1,6 @@
 import re
 
-class IPRegexBase:
+class IPRegexBase(object):
     """Compiled regex. Lazily initialized by :meth:`regex`."""
     _regex = None
 
