@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='ipregex',
-    version='0.1',
+    version='0.1.0',
     author='Omer F. Ozarslan',
     author_email='omer@utdallas.edu',
     packages=['ipregex'],
