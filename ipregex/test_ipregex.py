@@ -65,3 +65,6 @@ def test_ipv4_incorrect_addresses():
     assert(regex.match('`1.1.1.1') == None)
     assert(regex.match('1.1.a1.1') == None)
     assert(regex.match('1.1.1.1a') == None)
+
+def test_ipv6_incorrect_addresses():
+    pass
