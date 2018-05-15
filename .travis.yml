@@ -1,19 +1,25 @@
 language: python
 python:
-    - "2.6"
-    - "2.7"
-    - "3.3"
-    - "3.4"
-    - "3.5"
-    - "3.5-dev"
-    - "3.6"
-    - "3.6-dev"
-    - "3.7-dev"
+- '2.6'
+- '2.7'
+- '3.3'
+- '3.4'
+- '3.5'
+- '3.5-dev'
+- '3.6'
+- '3.6-dev'
+- '3.7-dev'
 install:
-    # pytest dropped support for Python 2.6 and 3.3 as of version 3.3.
-    - PYTEST_STR="pytest"
-    - if [[ $TRAVIS_PYTHON_VERSION == 2.6 ]]; then PYTEST_STR="pytest<3.3"; fi
-    - if [[ $TRAVIS_PYTHON_VERSION == 3.3 ]]; then PYTEST_STR="pytest<3.3"; fi
-    - pip install -U $PYTEST_STR
+- PYTEST_STR="pytest"
+- if [[ $TRAVIS_PYTHON_VERSION == 2.6 ]]; then PYTEST_STR="pytest<3.3"; fi
+- if [[ $TRAVIS_PYTHON_VERSION == 3.3 ]]; then PYTEST_STR="pytest<3.3"; fi
+- pip install -U $PYTEST_STR
+deploy:
+  provider: pypi
+  user: ozars
+  password:
+    secure: ls1maHDHUIR5bF044Id0PvApr1uoZ+g6pN09Y/MdsrtTffc8ToogEHsJ8/x4G+TdXOF8r/36hj5VTsaQaiXrKcwJdOflTVTL0SWMPOgs1U3asqsSPrh9gvh1QUP0MSj1xICzfQpBAzasZsAT636HV0kC0zy9vfE8j/MYBmHThXsVwTzpdAnBCorwnHJkF4jHTstr91iCwscazoqa6WlbYQ6LzYqhRh1YGeihUJrstoWBlHGNWqlQq2NdEv/ae1bYmA4Pom1j680KpDQr6M12kOAwjb+sY6MhYEWYHnT5w7rY8pWGXWsAWdVbtjCVpMtX/PXp7v+8K4qZuGRUAhTka5U2Tz4ybZ+Twe/HfaSLkkIJ/Gy3O5EOenYVzP8OefPAZ0kn9D5JWnEJTuTZKnukdOlb8GV12wP5MQbEZuS/VtwbMTu0vYWTURjCSDp25rsZMsxOhkrVR1yVHJXFFvD29N64TjjgLpnjdKE/eFxYlVxFQ6BFnlcN3yzUuwpSvM5glE3rsjcFTWhRSGSncHThZT5dYI3cpWiSHDeZ0FJMCItoq+4UUH+y7HraOsRf1DSg5FIxr94juPkCZzG6vqeByz/S8nNIQVz3LuE0k4vJpM01ihXuCBFsfv0Qbhl6JiE9PR/eEW9/hpWznFMl5G+MGKUyxJiiCmu9tGgyTZbAJhY=
+    on:
+        tags: true
 script:
-    - pytest
+- pytest
