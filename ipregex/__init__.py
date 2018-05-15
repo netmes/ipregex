@@ -95,6 +95,7 @@ class IPv6Regex(IPRegexBase):
         r'^'
         r'(?:'                           # begin non-capturing group
         r'(?:{x}:){{7}}{x}'              # 8 hextets
+        r'|(?:{x}:){{7}}:'               # or 7 hextets, then ::
         r'|(?:{x}:){{6}}(?::{x}){{0,1}}' # or 6 hextets, 0-1 hextets after ::
         r'|(?:{x}:){{5}}(?::{x}){{0,2}}' # or 5 hextets, 0-2 hextets after ::
         r'|(?:{x}:){{4}}(?::{x}){{0,3}}' # or 4 hextets, 0-3 hextets after ::
