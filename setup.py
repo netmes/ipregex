@@ -7,7 +7,7 @@ setup(
     author_email='omer@utdallas.edu',
     packages=['ipregex'],
     url='http://github.com/netmes/ipregex/',
-    license='GPLv3',
+    license='Apache Software License (Apache 2.0)',
     description=('Provides regular expression for IPv4/IPv6 addresses.'),
     long_description=open('README.rst').read(),
     classifiers=[
