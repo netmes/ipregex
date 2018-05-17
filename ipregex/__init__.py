@@ -95,14 +95,14 @@ class IPv6Regex(IPRegexBase):
         r'^'
         r'(?:'                           # begin non-capturing group
         r'(?:{x}:){{7}}{x}'              # 8 hextets
-        r'|(?:{x}:){{7}}:'               # or 7 hextets, then ::
-        r'|(?:{x}:){{6}}(?::{x}){{0,1}}' # or 6 hextets, 0-1 hextets after ::
-        r'|(?:{x}:){{5}}(?::{x}){{0,2}}' # or 5 hextets, 0-2 hextets after ::
-        r'|(?:{x}:){{4}}(?::{x}){{0,3}}' # or 4 hextets, 0-3 hextets after ::
-        r'|(?:{x}:){{3}}(?::{x}){{0,4}}' # or 3 hextets, 0-4 hextets after ::
-        r'|(?:{x}:){{2}}(?::{x}){{0,5}}' # or 2 hextets, 0-5 hextets after ::
-        r'|(?:{x}:){{1}}(?::{x}){{0,6}}' # or 1 hextet,  0-6 hextets after ::
-        r'|:(?::{x}){{1,7}}'             # or 1-7 hextets after ::
+        r'|(?:{x}:){{1,7}}:'             # or 1-7 hextets ::
+        r'|(?:{x}:){{6}}(?::{x}){{1}}'   # or 6 hextets :: 1 hextet
+        r'|(?:{x}:){{5}}(?::{x}){{1,2}}' # or 5 hextets :: 1-2 hextets
+        r'|(?:{x}:){{4}}(?::{x}){{1,3}}' # or 4 hextets :: 1-3 hextets
+        r'|(?:{x}:){{3}}(?::{x}){{1,4}}' # or 3 hextets :: 1-4 hextets
+        r'|(?:{x}:){{2}}(?::{x}){{1,5}}' # or 2 hextets :: 1-5 hextets
+        r'|(?:{x}:){{1}}(?::{x}){{1,6}}' # or 1 hextet  :: 1-6 hextets
+        r'|:(?::{x}){{1,7}}'             # or :: 1-7 hextets
         r'|::'                           # or no hextets at all
         r')'                             # end non-capturing group
         r'$'
