@@ -27,56 +27,56 @@ def test_ipv4_exhaust_addresses_with_boundary_segments():
 
     for ip in ip_list:
         ip_str = '.'.join(ip)
-        assert(regex.match(ip_str) != None)
+        assert(regex.match(ip_str))
 
 def test_ipv4_manual_correct_addresses():
     regex = IPv4Regex().regex
 
-    assert(regex.match('0.0.0.0')         != None)
-    assert(regex.match('1.1.1.1')         != None)
-    assert(regex.match('11.11.11.11')     != None)
-    assert(regex.match('111.111.111.111') != None)
-    assert(regex.match('222.222.222.222') != None)
-    assert(regex.match('250.250.250.250') != None)
-    assert(regex.match('255.255.255.255') != None)
+    assert(regex.match('0.0.0.0'))
+    assert(regex.match('1.1.1.1'))
+    assert(regex.match('11.11.11.11'))
+    assert(regex.match('111.111.111.111'))
+    assert(regex.match('222.222.222.222'))
+    assert(regex.match('250.250.250.250'))
+    assert(regex.match('255.255.255.255'))
 
-    assert(regex.match('1.11.111.222') != None)
-    assert(regex.match('222.111.11.1') != None)
-    assert(regex.match('1.11.111.250') != None)
-    assert(regex.match('250.111.11.1') != None)
-    assert(regex.match('1.11.222.250') != None)
-    assert(regex.match('250.222.11.1') != None)
+    assert(regex.match('1.11.111.222'))
+    assert(regex.match('222.111.11.1'))
+    assert(regex.match('1.11.111.250'))
+    assert(regex.match('250.111.11.1'))
+    assert(regex.match('1.11.222.250'))
+    assert(regex.match('250.222.11.1'))
 
 def test_ipv4_manual_incorrect_addresses():
     regex = IPv4Regex().regex
 
-    assert(regex.match('1')         == None)
-    assert(regex.match('1.1')       == None)
-    assert(regex.match('1.1.1')     == None)
-    assert(regex.match('1.1.1.1.')  == None)
-    assert(regex.match('.1.1.1.1')  == None)
-    assert(regex.match('.1.1.1.1.') == None)
-    assert(regex.match('1...')      == None)
-    assert(regex.match('1.1..')     == None)
-    assert(regex.match('1.1.1.')    == None)
-    assert(regex.match('.1.1.1')    == None)
-    assert(regex.match('..1.1')     == None)
-    assert(regex.match('...1')      == None)
-    assert(regex.match('1..')       == None)
+    assert(not regex.match('1'))
+    assert(not regex.match('1.1'))
+    assert(not regex.match('1.1.1'))
+    assert(not regex.match('1.1.1.1.'))
+    assert(not regex.match('.1.1.1.1'))
+    assert(not regex.match('.1.1.1.1.'))
+    assert(not regex.match('1...'))
+    assert(not regex.match('1.1..'))
+    assert(not regex.match('1.1.1.'))
+    assert(not regex.match('.1.1.1'))
+    assert(not regex.match('..1.1'))
+    assert(not regex.match('...1'))
+    assert(not regex.match('1..'))
 
-    assert(regex.match('1,1,1,1')   == None)
-    assert(regex.match('1-1-1-1')   == None)
+    assert(not regex.match('1,1,1,1'))
+    assert(not regex.match('1-1-1-1'))
 
-    assert(regex.match('256.1.1.1') == None)
-    assert(regex.match('1.256.1.1') == None)
-    assert(regex.match('1.1.256.1') == None)
-    assert(regex.match('1.1.1.256') == None)
+    assert(not regex.match('256.1.1.1'))
+    assert(not regex.match('1.256.1.1'))
+    assert(not regex.match('1.1.256.1'))
+    assert(not regex.match('1.1.1.256'))
 
-    assert(regex.match('1.-1.1.1') == None)
-    assert(regex.match('a1.1.1.1') == None)
-    assert(regex.match('`1.1.1.1') == None)
-    assert(regex.match('1.1.a1.1') == None)
-    assert(regex.match('1.1.1.1a') == None)
+    assert(not regex.match('1.-1.1.1'))
+    assert(not regex.match('a1.1.1.1'))
+    assert(not regex.match('`1.1.1.1'))
+    assert(not regex.match('1.1.a1.1'))
+    assert(not regex.match('1.1.1.1a'))
 
 @pytest.mark.exhaustive
 def test_ipv6_exhaust_addresses_with_boundary_segments():
@@ -88,20 +88,20 @@ def test_ipv6_exhaust_addresses_with_boundary_segments():
 
     for num_octets in range(9):
         if num_octets == 0:
-            assert(regex.match('::') != None)
+            assert(regex.match('::'))
         else:
             ip_list = itertools.product(correct_segments, repeat=num_octets)
             if num_octets == 8:
                 for ip in ip_list:
                     ip_str = ':'.join(ip)
-                    assert(regex.match(ip_str) != None)
+                    assert(regex.match(ip_str))
             else:
                 for ip in ip_list:
                     for num_octets_before_compression in range(num_octets+1):
                         ip_str = ':'.join(ip[:num_octets_before_compression])
                         ip_str += '::'
                         ip_str += ':'.join(ip[num_octets_before_compression:])
-                        assert(regex.match(ip_str) != None)
+                        assert(regex.match(ip_str))
 
 def test_ipv6_manual_correct_addresses():
     regex = IPv6Regex().regex
