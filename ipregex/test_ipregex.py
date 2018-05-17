@@ -15,6 +15,7 @@ def test_ipv4_exhaust_correct_addresses():
                 for m in range(0, 255, 1):
                     assert(regex.match('%s.%s.%s.%s' % (i, j, k, m)))
 
+@pytest.mark.exhaustive
 def test_ipv4_exhaust_addresses_with_boundary_segments():
     regex = IPv4Regex().regex
 
@@ -77,6 +78,7 @@ def test_ipv4_manual_incorrect_addresses():
     assert(regex.match('1.1.a1.1') == None)
     assert(regex.match('1.1.1.1a') == None)
 
+@pytest.mark.exhaustive
 def test_ipv6_exhaust_addresses_with_boundary_segments():
     regex = IPv6Regex().regex
 
