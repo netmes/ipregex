@@ -30,7 +30,7 @@ def test_ipv4_exhaust_addresses_with_boundary_segments():
         assert(regex.match(ip_str) != None)
 
 
-def test_ipv4_correct_addresses():
+def test_ipv4_manual_correct_addresses():
     regex = IPv4Regex().regex
 
     assert(regex.match('0.0.0.0')         != None)
@@ -49,7 +49,7 @@ def test_ipv4_correct_addresses():
     assert(regex.match('250.222.11.1') != None)
 
 
-def test_ipv4_incorrect_addresses():
+def test_ipv4_manual_incorrect_addresses():
     regex = IPv4Regex().regex
 
     assert(regex.match('1')         == None)
@@ -80,7 +80,7 @@ def test_ipv4_incorrect_addresses():
     assert(regex.match('1.1.a1.1') == None)
     assert(regex.match('1.1.1.1a') == None)
 
-def test_ipv6_exhaust_boundary_segments():
+def test_ipv6_exhaust_addresses_with_boundary_segments():
     regex = IPv6Regex().regex
 
     correct_segments = [
@@ -104,7 +104,7 @@ def test_ipv6_exhaust_boundary_segments():
                         ip_str += ':'.join(ip[num_octets_before_compression:])
                         assert(regex.match(ip_str) != None)
 
-def test_ipv6_correct_addresses():
+def test_ipv6_manual_correct_addresses():
     regex = IPv6Regex().regex
 
     assert(regex.match('0000:0000:0000:0000:0000:0000:0000:0000'))
